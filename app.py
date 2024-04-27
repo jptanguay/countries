@@ -18,7 +18,7 @@ import os
 def load_data():
     df = pd.read_csv("./Country-data.csv")
     df["log_income"] = np.log10(df["income"])
-    df["log_gdpp"] = np.log(df["gdpp"])
+    df["log_gdpp"] = np.log10(df["gdpp"])
     return df
 
 
@@ -82,7 +82,7 @@ with st.container(border=True):
     st.subheader("Life expectancy vs other columns")
     
     selected_col = st.radio("Select a field", options=colnames, horizontal = True)
-    """ income and gdpp have a log relationship with life expectancy """
+    """ Note: income and gdpp have a log relationship with life expectancy """
     if selected_col:
         st.write(f"Life expectancy vs {selected_col}") # investments (in % of GDP per capita)")
         fig2 = plt.figure(figsize=(10, 4))
@@ -90,12 +90,13 @@ with st.container(border=True):
         st.pyplot(fig2)
     
 
-    st.write("Life expectancy vs GDP per capita and Health investments (in % of GDP per capita)")
-    fig1 = sns.relplot(data=df, x="gdpp",  y="health", hue="life_expec")
+    st.write("Life expectancy vs log of GDP per capita and log of income ")
+    #fig1 = sns.relplot(data=df, x="gdpp",  y="health", hue="life_expec")
+    fig1 = sns.relplot(data=df, x="log_gdpp",  y="log_income", hue="life_expec")
     st.pyplot(fig1)
     #plt.show()
 
-
+    
 
 #################
 # clustering
@@ -139,15 +140,16 @@ with st.container(border=True):
     grouped = df_clustered[ ["group", "life_expec"] ].groupby('group')         
     grouped = grouped.mean()  
     grouped["life_expec"] = grouped["life_expec"].apply(lambda x: round(x, 2))
+
     
-    
-    # affichr les myennes
+    # afficher les moyennes
     st.subheader("Mean life expectancy by cluster")
     st.write("Unsorted")
     st.dataframe(grouped.T)
     st.write("Sorted")
-    st.dataframe(grouped.sort_values("life_expec", ascending=False).T)
-    
+    df_sorted = grouped.sort_values("life_expec", ascending=False)
+    st.dataframe(df_sorted.T)
+    #st.line_chart(df_sorted.reset_index(), x="group", y="life_expec")
     
     # choisir le groupe
     st.subheader("Cluster  details")
@@ -172,7 +174,7 @@ with st.container(border=True):
         with col2:
         
             st.markdown("##### Countries in this cluster", unsafe_allow_html=True)
-            st.write(df_group)
+            st.write(df_group.style.background_gradient(subset=["life_expec"], cmap="RdYlGn"))
      
 
     #df_clustered
