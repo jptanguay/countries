@@ -48,7 +48,10 @@ data = df.drop(columns=target_name)
 #  display
 #######################################
 
-st.title("Countries clustering")
+col1, col2 = st.columns(2)
+
+col1.title("Countries clustering")
+col2.image("countries.png")
 st.write(
     """The date of the dataset is not specified. Information on the source page let believe it could be from 2020 or even before"""
 )
@@ -56,7 +59,6 @@ st.write(
 
 
 st.header("Data Exploration")
-
 
 
 with st.container(border=True):
