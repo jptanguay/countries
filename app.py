@@ -48,7 +48,7 @@ data = df.drop(columns=target_name)
 #  display
 #######################################
 
-st.title("Country clustering")
+st.title("Countries clustering")
 st.write(
     """The date of the dataset is not specified. Information on the source page let believe it could be from 2020 or even before"""
 )
@@ -62,8 +62,10 @@ st.header("Data Exploration")
 with st.container(border=True):
 
     st.write(df)
-
-
+    
+    with st.expander("Statistiques"):
+        st.write( df.describe() )
+    
     with st.expander("Code book"):
         file_path = "./data-dictionary.csv"
         df_code = pd.read_csv(file_path)
@@ -82,7 +84,7 @@ with st.container(border=True):
     st.subheader("Life expectancy vs other columns")
     
     selected_col = st.radio("Select a field", options=colnames, horizontal = True)
-    """ Note: income and gdpp have a log relationship with life expectancy """
+    st.caption("Note: income and gdpp have a log relationship with life expectancy")
     if selected_col:
         st.write(f"Life expectancy vs {selected_col}") # investments (in % of GDP per capita)")
         fig2 = plt.figure(figsize=(10, 4))
@@ -152,7 +154,7 @@ with st.container(border=True):
     #st.line_chart(df_sorted.reset_index(), x="group", y="life_expec")
     
     # choisir le groupe
-    st.subheader("Cluster  details")
+    st.subheader("Clusters details")
     
     unique_labels = np.unique(kmeans.labels_)
     selected_group = st.radio("Select a cluster", 
