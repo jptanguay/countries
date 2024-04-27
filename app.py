@@ -82,7 +82,7 @@ with st.container(border=True):
     st.subheader("Life expectancy vs other columns")
     
     selected_col = st.radio("Select a field", options=colnames, horizontal = True)
-    """ income and gdpp have a log relationsip with life expectancy """
+    """ income and gdpp have a log relationship with life expectancy """
     if selected_col:
         st.write(f"Life expectancy vs {selected_col}") # investments (in % of GDP per capita)")
         fig2 = plt.figure(figsize=(10, 4))
@@ -116,7 +116,7 @@ with st.container(border=True):
 
     kmeans = KMeans(n_clusters=n_cluster, random_state=0, n_init="auto")
     model = make_pipeline(StandardScaler(), kmeans)
-    st.write(model)
+    #st.write(model)
     estimator = model.fit(data)    
     #st.write(kmeans.labels_)
 
