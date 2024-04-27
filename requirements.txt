@@ -1,0 +1,12 @@
+streamlit
+pandas
+seaborn
+
+matplotlib
+numpy
+
+sklearn
+sklearn
+sklearn
+
+os
