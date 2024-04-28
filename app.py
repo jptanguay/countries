@@ -140,6 +140,14 @@ with st.container(border=True):
     df_clustered = df[ ["country", "life_expec"] ]
     df_clustered["group"] = kmeans.labels_
 
+
+    # box plot
+    #df_clustered
+    fig_box = plt.figure(figsize=(10, 4))
+    plot = sns.boxplot(df_clustered, x="group", y="life_expec")     
+    st.pyplot(fig_box) #plot.get_figure())
+
+
     # calculer le mean life expectancy by group
     grouped = df_clustered[ ["group", "life_expec"] ].groupby('group')         
     grouped = grouped.mean()  
